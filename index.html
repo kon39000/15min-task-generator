@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>15分タスクジェネレーター | 今日の15分、何する？</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header>
+        <div class="header-content">
+            <h1>🎯 15分タスクジェネレーター</h1>
+            <div class="streak-badge" id="streakBadge">
+                <span class="flame">🔥</span>
+                <span class="streak-text">連続 <span id="streakCount">0</span> 日</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main>
+        <!-- スタート画面 -->
+        <div id="startScreen" class="screen active">
+            <div class="welcome-message">
+                <h2>今日の15分、何する？</h2>
+                <p>AIスキルを身につける小さな一歩を始めましょう</p>
+            </div>
+
+            <!-- カテゴリー選択 -->
+            <div class="category-grid">
+                <button class="category-btn" data-category="ai-basic">
+                    <span class="category-icon">📝</span>
+                    <span class="category-name">AI基礎</span>
+                    <span class="category-desc">ChatGPTの使い方</span>
+                </button>
+                <button class="category-btn" data-category="idea">
+                    <span class="category-icon">💡</span>
+                    <span class="category-name">アイデア出し</span>
+                    <span class="category-desc">noteネタを探す</span>
+                </button>
+                <button class="category-btn" data-category="content">
+                    <span class="category-icon">✍️</span>
+                    <span class="category-name">コンテンツ作成</span>
+                    <span class="category-desc">記事を書く</span>
+                </button>
+                <button class="category-btn" data-category="tool">
+                    <span class="category-icon">🔧</span>
+                    <span class="category-name">ツール練習</span>
+                    <span class="category-desc">便利ツールを使う</span>
+                </button>
+                <button class="category-btn" data-category="output">
+                    <span class="category-icon">📢</span>
+                    <span class="category-name">アウトプット</span>
+                    <span class="category-desc">成果を共有</span>
+                </button>
+            </div>
+
+            <!-- 時間別フィルター -->
+            <div class="time-filter-container">
+                <h3>時間で選ぶ</h3>
+                <div class="time-filter-buttons">
+                    <button class="time-filter-btn" data-time="5">
+                        <span class="time-icon">⚡</span>
+                        <span class="time-label">5分</span>
+                        <span class="time-desc">サクッと</span>
+                    </button>
+                    <button class="time-filter-btn" data-time="10">
+                        <span class="time-icon">⏰</span>
+                        <span class="time-label">10分</span>
+                        <span class="time-desc">しっかり</span>
+                    </button>
+                    <button class="time-filter-btn" data-time="15">
+                        <span class="time-icon">🎯</span>
+                        <span class="time-label">15分</span>
+                        <span class="time-desc">じっくり</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ランダムタスクボタン -->
+            <div class="random-task-container">
+                <button id="randomTaskBtn" class="random-task-btn">
+                    <span class="dice">🎲</span>
+                    今日のラッキータスク
+                </button>
+            </div>
+        </div>
+
+        <!-- タスク表示画面 -->
+        <div id="taskScreen" class="screen">
+            <div class="task-card">
+                <div class="task-header">
+                    <span class="task-category" id="taskCategory"></span>
+                    <span class="task-time" id="taskTime">15分</span>
+                </div>
+                <h3 class="task-title" id="taskTitle"></h3>
+                
+                <div class="task-steps" id="taskSteps">
+                    <!-- ステップがここに動的に挿入される -->
+                </div>
+
+                <div class="task-result">
+                    <h4>期待される成果</h4>
+                    <p id="expectedResult"></p>
+                </div>
+
+                <div class="task-actions">
+                    <button id="completeBtn" class="complete-btn">
+                        <span class="check">✓</span>
+                        できた！
+                    </button>
+                    <button id="anotherTaskBtn" class="another-task-btn">
+                        別のタスクを見る
+                    </button>
+                </div>
+            </div>
+
+            <button id="backBtn" class="back-btn">← カテゴリーに戻る</button>
+        </div>
+
+        <!-- 完了画面 -->
+        <div id="completionScreen" class="screen">
+            <div class="completion-content">
+                <div class="confetti" id="confetti"></div>
+                <h2 class="completion-title">🎉 お疲れさまでした！</h2>
+                <p class="completion-message">今日も一歩前進しました</p>
+                
+                <div class="stats-summary">
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalTasks">0</span>
+                        <span class="stat-label">累計タスク</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="weeklyTasks">0</span>
+                        <span class="stat-label">今週の達成</span>
+                    </div>
+                </div>
+
+                <div class="share-section">
+                    <p>今日の達成をシェアしよう！</p>
+                    <button id="shareBtn" class="share-btn">
+                        <span>📱</span>
+                        SNSでシェア
+                    </button>
+                </div>
+
+                <button id="newTaskBtn" class="new-task-btn">新しいタスクを始める</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- フッター -->
+    <footer>
+        <div class="footer-content">
+            <p>毎日15分の積み重ねが、大きな成果につながります</p>
+            <div class="footer-stats">
+                <span>累計完了: <span id="footerTotalTasks">0</span></span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -2,6 +2,12 @@
 
 「今日の15分、何する？」をワンクリックで解決するAI学習支援ツール
 
+## 🚀 デモサイト
+
+**👉 [https://15min-task-generator.vercel.app](https://15min-task-generator.vercel.app)**
+
+今すぐ使ってみる！
+
 ## 概要
 
 時間がない中でもAIスキルを身につけたい人のための、15分でできる具体的なタスクを提案するWebアプリです。
